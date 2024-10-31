@@ -162,8 +162,8 @@
             <td colspan="2" style="text-align: right; padding-right: 30px">Bengkulu, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</td>
         </tr>
         <tr>
-            <td style="text-align: right; vertical-align: bottom; padding-right: 47px" height="100px">
-                <b>Admin Kepegawaian</b>
+            <td style="text-align: right; vertical-align: bottom; padding-right: 60px" height="100px">
+                <b>Yupianti, M.Kom</b>
             </td>
         </tr>
     </table>
