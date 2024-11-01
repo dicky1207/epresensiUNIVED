@@ -91,8 +91,9 @@
             var lat_kantor = lok[0];
             var long_kantor = lok[1];
             var radius = "{{ $lok_kantor->radius }}";
-            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
+            L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+                maxZoom: 20,
+                subdomains:['mt0','mt1','mt2','mt3']
             }).addTo(map);
             var marker = L.marker([position.coords.latitude, position.coords.longitude]).addTo(map);
             var circle = L.circle([lat_kantor, long_kantor], {
