@@ -180,7 +180,7 @@
                             <path d="M7 16l10 0" />
                             </svg>
                         </span>
-                        <input type="text" value="" class="form-control" id="nik" name="nik" placeholder="NIK">
+                        <input type="text" maxlength="8" value="" class="form-control" id="nik" name="nik" placeholder="NIK">
                     </div>
                 </div>
             </div>
@@ -305,6 +305,9 @@
 @push('myscript')
     <script>
         $(function(){
+
+            $("#nik").mask("00000000");
+            $("#no_hp").mask("0000000000000");
             $("#btnTambahPegawai").click(function(){
                 $("#modal-inputpegawai").modal("show");
             });

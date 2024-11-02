@@ -54,7 +54,7 @@
                                             <path d="M18.832 17.86a9 9 0 1 0 -6.832 3.14" /><path d="M12 12v9" />
                                             </svg>
                                         </span>
-                                        <input type="text" value="{{ $lok_kantor->radius }}" class="form-control" id="radius" name="radius" placeholder="Radius">
+                                        <input type="text" maxlength="2" value="{{ $lok_kantor->radius }}" class="form-control" id="radius" name="radius" placeholder="Radius">
                                     </div>
                                 </div>
                             </div>
