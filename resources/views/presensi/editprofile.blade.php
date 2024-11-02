@@ -30,6 +30,11 @@
                 {{ $messageerror }}
             </div>
         @endif
+        @error('foto')
+        <div class="alert alert-warning">
+            <p>{{ $message }}</p>
+        </div>    
+        @enderror
     </div>
 </div>
 <form action="/presensi/{{ $pegawai->nik }}/updateprofile" method="POST" enctype="multipart/form-data">
@@ -56,7 +61,7 @@
             </div>
         </div>
         <div class="custom-file-upload" id="fileUpload1">
-            <input type="file" name="foto" id="fileuploadInput">
+            <input type="file" name="foto" id="fileuploadInput" accept=".png, .jpg, .jpeg">
             <label for="fileuploadInput">
                 <span>
                     <strong>
