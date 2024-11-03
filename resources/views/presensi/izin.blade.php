@@ -12,6 +12,14 @@
 </div>
 <!-- * App Header -->
 @endsection
+<?php
+function hitunghari($tanggal_awal, $tanggal_akhir){
+    $tanggal_1 = date_create($tanggal_awal);
+    $tanggal_2 = date_create($tanggal_akhir); // waktu sekarang
+    $diff = date_diff( $tanggal_1, $tanggal_2 );
+    return $diff->days + 1;
+}
+?>
 @section('content')
 <div class="row" style="margin-top: 70px">
     <div class="col">
@@ -34,7 +42,30 @@
 <div class="row">
     <div class="col">
     @foreach ($dataizin as $d)
-    <ul class="listview image-listview">
+    <div class="card mb-2">
+        <div class="card-body">
+            <div class="d-flex align-items-center">
+                <div class="iconpresensi me-3">
+                    <ion-icon name="document-text" style="font-size: 42px;" class="text-info"></ion-icon>
+                </div>
+                <div class="flex-grow-1">
+                    <b>{{ date("d-m-Y", strtotime($d->tgl_awal)) }} s/d {{ date("d-m-Y", strtotime($d->tgl_akhir)) }} ({{ $d->status == "c" ? "Cuti" : "Izin" }} {{ hitunghari($d->tgl_awal, $d->tgl_akhir) }} Hari)</b><br>
+                    <small class="text-muted">{{ $d->keterangan }}</small>
+                </div>
+                <div>
+                    @if($d->status_approvement == 0)
+                        <span class="badge bg-warning">Waiting</span>
+                    @elseif($d->status_approvement == 1)
+                        <span class="badge bg-success">Disetujui</span>
+                    @elseif($d->status_approvement == 2)
+                        <span class="badge bg-danger">Ditolak</span>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- <ul class="listview image-listview">
         <li>
             <div class="item">
                 <div class="in">
@@ -52,7 +83,7 @@
                 </div>
             </div>
         </li>
-    </ul>
+    </ul> --}}
     @endforeach
     </div>
 </div>
