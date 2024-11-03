@@ -45,11 +45,18 @@ function hitunghari($tanggal_awal, $tanggal_akhir){
     <div class="card mb-2">
         <div class="card-body">
             <div class="d-flex align-items-center">
-                <div class="iconpresensi me-3">
-                    <ion-icon name="document-text" style="font-size: 42px;" class="text-info"></ion-icon>
+                <div class="iconpresensi" style="padding-right: 8px;"> <!-- Menambahkan padding kanan -->
+                    @if ($d->status_approvement == "0")
+                        <ion-icon name="help" style="font-size: 40px;" class="text-warning"></ion-icon>
+                    @elseif($d->status_approvement == "1")
+                        <ion-icon name="checkmark-done" style="font-size: 40px;" class="text-success"></ion-icon>
+                    @elseif($d->status_approvement == "2")
+                        <ion-icon name="close" style="font-size: 40px;" class="text-danger"></ion-icon>
+                    @endif
                 </div>
                 <div class="flex-grow-1">
-                    <b>{{ date("d-m-Y", strtotime($d->tgl_awal)) }} s/d {{ date("d-m-Y", strtotime($d->tgl_akhir)) }} ({{ $d->status == "c" ? "Cuti" : "Izin" }} {{ hitunghari($d->tgl_awal, $d->tgl_akhir) }} Hari)</b><br>
+                    <b>{{ date("d-m-Y", strtotime($d->tgl_awal)) }} s/d {{ date("d-m-Y", strtotime($d->tgl_akhir)) }}
+                    ({{ $d->status == "c" ? "Cuti" : "Izin" }} {{ hitunghari($d->tgl_awal, $d->tgl_akhir) }} Hari)</b><br>
                     <small class="text-muted">{{ $d->keterangan }}</small>
                 </div>
                 <div>
