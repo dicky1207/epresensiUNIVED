@@ -111,51 +111,17 @@
             <th rowspan="2">No.</th>
             <th rowspan="2">NIK</th>
             <th rowspan="2">Nama Pegawai</th>
-            <th colspan="31">Tanggal</th>
+            <th colspan="{{ $jmlhari }}">Bulan {{ $namabulan[$bulan] }} {{ $tahun }}</th>
             <th rowspan="2">TH</th>
             <th rowspan="2">TK</th>
         </tr>
         <tr>
-            <?php
-            for ($i=1; $i <=31; $i++) { 
-            ?>
-            <th>{{ $i }}</th>
-            <?php
-            }
-            ?>
+            @foreach ($rangetanggal as $d)
+            @if($d != NULL)
+            <th>{{ date("d", strtotime($d)) }}</th>
+            @endif
+            @endforeach
         </tr>
-        @foreach ($rekap as $d)
-        <tr>
-            <td>{{ $loop->iteration }}</td>
-            <td>{{ $d->nik }}</td>
-            <td>{{ $d->nama_lengkap }}</td>
-            <?php
-            $totalhadir = 0;
-            $totalterlambat = 0;
-            for ($i=1; $i <=31; $i++) { 
-                $tgl = "tgl_".$i;
-                if(empty($d->$tgl)){
-                    $hadir = ['',''];
-                    $totalhadir += 0;
-                }else {
-                    $hadir = explode("-",$d->$tgl);
-                    $totalhadir += 1;
-                    if ($hadir[0] > "09:00:00") {
-                        $totalterlambat += 1;
-                    }
-                }
-            ?>
-            <td>
-                <span style="color:{{ $hadir[0] > "09:00:00" ? "red" : "" }}">{{ $hadir[0] }}</span><br>
-                {{ $hadir[1] }}
-            </td>
-            <?php
-            }
-            ?>
-            <td>{{ $totalhadir }}</td>
-            <td>{{ $totalterlambat }}</td>
-        </tr>
-        @endforeach
     </table>
     <table width="100%" style="margin-top: 100px">
         <tr>
