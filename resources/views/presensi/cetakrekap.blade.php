@@ -99,6 +99,7 @@
             <th rowspan="2">TH</th>
             <th rowspan="2">TC</th>
             <th rowspan="2">TI</th>
+            <th rowspan="2">TA</th>
         </tr>
         <tr>
             @for ($tgl = 1; $tgl <= $jmlhari; $tgl++)
@@ -111,18 +112,30 @@
             <td>{{ $pegawai['nik'] }}</td>
             <td>{{ $pegawai['nama_lengkap'] }}</td>
             @for ($tgl = 1; $tgl <= $jmlhari; $tgl++)
-                <td>{{ $pegawai["tgl_$tgl"] ?? '' }}</td>
+            @if ($pegawai["tgl_$tgl"] === '✓')
+            <td style="color: green; font-weight: bold;">{{ $pegawai["tgl_$tgl"] }}</td>
+            @elseif ($pegawai["tgl_$tgl"] === '✗')
+            <td style="color: red; font-weight: bold;">{{ $pegawai["tgl_$tgl"] }}</td>
+            @elseif ($pegawai["tgl_$tgl"] === 'c')
+            <td style="color: blue; font-weight: bold;">{{ $pegawai["tgl_$tgl"] }}</td>
+            @elseif ($pegawai["tgl_$tgl"] === 'i')
+            <td style="color: orange; font-weight: bold;">{{ $pegawai["tgl_$tgl"] }}</td>
+            @else
+            <td>{{ $pegawai["tgl_$tgl"] ?? '' }}</td>
+            @endif
             @endfor
-            <td>{{ $pegawai['totalHadir'] }}</td>
-            <td>{{ $pegawai['totalCuti'] }}</td>
-            <td>{{ $pegawai['totalIzin'] }}</td>
+            <td style="color: green;">{{ $pegawai['totalHadir'] }}</td>
+            <td style="color: blue;">{{ $pegawai['totalCuti'] }}</td>
+            <td style="color: orange;">{{ $pegawai['totalIzin'] }}</td>
+            <td style="color: red;">{{ $pegawai['totalAlpa'] }}</td>
         </tr>
         @endforeach
     </table>
 
-    <!-- Keterangan untuk TH, TC, dan TI -->
+    <!-- Keterangan untuk TH, TC, TI dan TA -->
     <div class="keterangan">
-        <p><strong>Keterangan:</strong> ✓ = Hadir, ✗ = Tidak Hadir, C = Cuti, I = Izin</p>
+        <p><strong>Keterangan Simbol:</strong> ✓ = Hadir, ✗ = Alpa, c = Cuti, i = Izin</p>
+        <p><strong>Keterangan:</strong> TH = Total Hadir, TC = Total Cuti, TI = Total Izin, TA = Total Alpa</p>
     </div>
 
     <table width="100%" style="margin-top: 100px">

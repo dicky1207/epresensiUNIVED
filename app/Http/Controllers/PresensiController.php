@@ -297,7 +297,8 @@ class PresensiController extends Controller
                 'nama_lengkap' => $pegawai->nama_lengkap,
                 'totalHadir' => '',
                 'totalCuti' => '',
-                'totalIzin' => ''
+                'totalIzin' => '',
+                'totalAlpa' => ''
             ];
 
         for ($tgl = 1; $tgl <= $jmlhari; $tgl++) {
@@ -310,7 +311,7 @@ class PresensiController extends Controller
 
             if ($presensi) {
                 $row["tgl_$tgl"] = '✓';
-                $row['totalHadir']++;  // Tambahkan jumlah hadir
+                $row['totalHadir']++;  // Hitung total hadir
             } else {
                 $cuti_izin = DB::table('cuti_izin')
                     ->where('nik', $pegawai->nik)
@@ -322,12 +323,13 @@ class PresensiController extends Controller
                 if ($cuti_izin) {
                         $row["tgl_$tgl"] = $cuti_izin->status;
                         if ($cuti_izin->status == 'c') {
-                            $row['totalCuti']++;  // Tambahkan jumlah cuti
+                            $row['totalCuti']++;  // Hitung total cuti
                         } elseif ($cuti_izin->status == 'i') {
-                            $row['totalIzin']++;  // Tambahkan jumlah izin
+                            $row['totalIzin']++;  // Hitung total izin
                         }
                     } else {
                         $row["tgl_$tgl"] = '✗';
+                        $row['totalAlpa']++; // Hitung total alpa
                 }
             }
         }
