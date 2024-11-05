@@ -288,7 +288,7 @@ class PresensiController extends Controller
 
         // Hitung jumlah hari dalam bulan yang dipilih
         $jmlhari = Carbon::create($tahun, $bulan)->daysInMonth;
-
+        
         //buat array rekap
         $rekap = [];
         foreach ($semuapegawai as $pegawai) {
