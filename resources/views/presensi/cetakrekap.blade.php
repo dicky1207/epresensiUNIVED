@@ -64,32 +64,15 @@
         height: 30px;
     }
 
+    .keterangan {
+        font-size: 12px;
+        margin-top: 20px;
+    }
+
     </style>
 </head>
 
-<!-- Set "A5", "A4" or "A3" for class name -->
-<!-- Set also "landscape" if you need -->
 <body class="A4 landscape">
-
-<?php
-  //Function Untuk Menghitung Selisih Jam
-  function selisih($jam_masuk, $jam_keluar)
-        {
-            list($h, $m, $s) = explode(":", $jam_masuk);
-            $dtAwal = mktime($h, $m, $s, "1", "1", "1");
-            list($h, $m, $s) = explode(":", $jam_keluar);
-            $dtAkhir = mktime($h, $m, $s, "1", "1", "1");
-            $dtSelisih = $dtAkhir - $dtAwal;
-            $totalmenit = $dtSelisih / 60;
-            $jam = explode(".", $totalmenit / 60);
-            $sisamenit = ($totalmenit / 60) - $jam[0];
-            $sisamenit2 = $sisamenit * 60;
-            $jml_jam = $jam[0];
-            return $jml_jam . ":" . round($sisamenit2);
-        }
-?>
-  <!-- Each sheet element should have the class "sheet" -->
-  <!-- "padding-**mm" is optional: you can set 10, 15, 20 or 25 -->
   <section class="sheet padding-10mm">
     <table style="width: 100%">
         <tr>
@@ -106,23 +89,42 @@
             </td>
         </tr>
     </table>
+
     <table class="tabelpresensi">
         <tr>
             <th rowspan="2">No.</th>
             <th rowspan="2">NIK</th>
             <th rowspan="2">Nama Pegawai</th>
-            <th colspan="{{ $jmlhari }}">Bulan {{ $namabulan[$bulan] }} {{ $tahun }}</th>
+            <th colspan="{{ $jmlhari }}">Tanggal</th>
             <th rowspan="2">TH</th>
-            <th rowspan="2">TK</th>
+            <th rowspan="2">TC</th>
+            <th rowspan="2">TI</th>
         </tr>
         <tr>
-            @foreach ($rangetanggal as $d)
-            @if($d != NULL)
-            <th>{{ date("d", strtotime($d)) }}</th>
-            @endif
-            @endforeach
+            @for ($tgl = 1; $tgl <= $jmlhari; $tgl++)
+                <th>{{ $tgl }}</th>
+            @endfor
         </tr>
+        @foreach ($rekap as $pegawai)
+        <tr>
+            <td>{{ $loop->iteration }}</td>
+            <td>{{ $pegawai['nik'] }}</td>
+            <td>{{ $pegawai['nama_lengkap'] }}</td>
+            @for ($tgl = 1; $tgl <= $jmlhari; $tgl++)
+                <td>{{ $pegawai["tgl_$tgl"] ?? '' }}</td>
+            @endfor
+            <td>{{ $pegawai['totalHadir'] }}</td>
+            <td>{{ $pegawai['totalCuti'] }}</td>
+            <td>{{ $pegawai['totalIzin'] }}</td>
+        </tr>
+        @endforeach
     </table>
+
+    <!-- Keterangan untuk TH, TC, dan TI -->
+    <div class="keterangan">
+        <p><strong>Keterangan:</strong> ✓ = Hadir, ✗ = Tidak Hadir, C = Cuti, I = Izin</p>
+    </div>
+
     <table width="100%" style="margin-top: 100px">
         <tr>
             <td colspan="2" style="text-align: right; padding-right: 30px">Bengkulu, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</td>
