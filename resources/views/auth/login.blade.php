@@ -67,7 +67,7 @@
                     @csrf
                     <div class="form-group boxed">
                         <div class="input-wrapper">
-                            <input type="text" name="nik" class="form-control" id="nik" placeholder="NIK">
+                            <input type="text" maxlength="7" autocomplete="off" name="nik" class="form-control" id="nik" placeholder="NIK">
                             <i class="clear-input">
                                 <ion-icon name="close-circle"></ion-icon>
                             </i>
