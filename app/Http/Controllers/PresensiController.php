@@ -353,6 +353,12 @@ class PresensiController extends Controller
     
             $rekap[] = $row;
         }
+
+        if (isset($_POST['exportexcel'])) {
+            $time = date("d-m-Y H:i:s");
+            header("Content-type: application/vnd-ms-excel");
+            header("Content-Disposition: attachment; filename=Laporan Presensi $time.xls");
+        }
     
         return view('presensi.cetakrekap', compact('rekap', 'namabulan', 'bulan', 'tahun', 'jmlhari'));
     }
