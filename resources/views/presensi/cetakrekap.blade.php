@@ -121,7 +121,7 @@
             @elseif ($pegawai["tgl_$tgl"] === 'i')
             <td style="color: orange; font-weight: bold;">{{ $pegawai["tgl_$tgl"] }}</td>
             @else
-            <td>{{ $pegawai["tgl_$tgl"] ?? '' }}</td>
+            <td style="background-color: red;">{{ $pegawai["tgl_$tgl"] ?? '' }}</td>
             @endif
             @endfor
             <td style="color: green;">{{ $pegawai['totalHadir'] }}</td>

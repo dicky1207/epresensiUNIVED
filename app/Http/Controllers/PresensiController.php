@@ -287,7 +287,14 @@ class PresensiController extends Controller
         $semuapegawai = DB::table('pegawai')->select('nik', 'nama_lengkap')->get();
 
         // Hitung jumlah hari dalam bulan yang dipilih
-        $jmlhari = Carbon::create($tahun, $bulan)->daysInMonth;
+        $jmlhari = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
+
+        // Daftar hari libur (tentukan di sini)
+        $hariLibur = [
+            "$tahun-11-06", // Contoh: 
+            "$tahun-08-17", // Contoh: 
+            // Tambahkan tanggal libur lainnya
+        ];
         
         //buat array rekap
         $rekap = [];
@@ -303,42 +310,51 @@ class PresensiController extends Controller
 
         for ($tgl = 1; $tgl <= $jmlhari; $tgl++) {
             $date = sprintf('%04d-%02d-%02d', $tahun, $bulan, $tgl);
+            $dayOfWeek = \Carbon\Carbon::parse($date)->dayOfWeek;
+
+            // Cek apakah hari Minggu atau hari libur
+            $isHoliday = $dayOfWeek === 0 || in_array($date, $hariLibur);
 
             $presensi = DB::table('presensi')
                 ->where('nik', $pegawai->nik)
                 ->whereDate('tgl_presensi', $date)
                 ->exists();
 
-            if ($presensi) {
-                $row["tgl_$tgl"] = '✓';
-                $row['totalHadir']++;  // Hitung total hadir
-            } else {
-                $cuti_izin = DB::table('cuti_izin')
-                    ->where('nik', $pegawai->nik)
-                    ->whereDate('tgl_awal', '<=', $date)
-                    ->whereDate('tgl_akhir', '>=', $date)
-                    ->select('status')
-                    ->first();
-
-                if ($cuti_izin) {
-                        $row["tgl_$tgl"] = $cuti_izin->status;
-                        if ($cuti_izin->status == 'c') {
-                            $row['totalCuti']++;  // Hitung total cuti
-                        } elseif ($cuti_izin->status == 'i') {
-                            $row['totalIzin']++;  // Hitung total izin
+                if ($presensi) {
+                    $row["tgl_$tgl"] = '✓';
+                    $row['totalHadir']++;
+                } else {
+                    // Cek jika pegawai mengajukan cuti atau izin
+                    $cuti_izin = DB::table('cuti_izin')
+                        ->where('nik', $pegawai->nik)
+                        ->whereDate('tgl_awal', '<=', $date)
+                        ->whereDate('tgl_akhir', '>=', $date)
+                        ->where('status_approvement', '1')
+                        ->select('status')
+                        ->first();
+    
+                    if ($cuti_izin) {
+                        $row["tgl_$tgl"] = $cuti_izin->status; // Tetap tampilkan 'c' atau 'i'
+                        
+                        // Hitung total berdasarkan status
+                        if ($cuti_izin->status === 'c') {
+                            $row['totalCuti']++;
+                        } elseif ($cuti_izin->status === 'i') {
+                            $row['totalIzin']++;
                         }
+                    } elseif (!$isHoliday) {
+                        $row["tgl_$tgl"] = '✗'; // Tidak hadir pada hari kerja
+                        $row['totalAlpa']++;
                     } else {
-                        $row["tgl_$tgl"] = '✗';
-                        $row['totalAlpa']++; // Hitung total alpa
+                        $row["tgl_$tgl"] = ''; // Kosongkan jika hari libur atau Minggu
+                    }
                 }
             }
+    
+            $rekap[] = $row;
         }
-
-        $rekap[] = $row;
-    }
-
-        // kirim data ke view
-        return view('presensi.cetakrekap', compact('rekap', 'bulan', 'namabulan', 'tahun', 'jmlhari'));
+    
+        return view('presensi.cetakrekap', compact('rekap', 'namabulan', 'bulan', 'tahun', 'jmlhari'));
     }
 
     public function izincuti(Request $request)
