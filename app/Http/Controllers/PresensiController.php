@@ -201,7 +201,7 @@ class PresensiController extends Controller
         $lampiran = $request->lampiran;
         if ($request->hasFile('lampiran')) {
             $folderPath = "public/uploads/lampiran";
-            $lampiranName = $nik . '_' . $request->file('lampiran')->getClientOriginalName();
+            $lampiranName = $nik . '_' . Carbon::parse($tgl_awal)->format('dmY') . '_' . $request->file('lampiran')->getClientOriginalName();
             $lampiran = $request->file('lampiran')->storeAs($folderPath, $lampiranName);
         }
 

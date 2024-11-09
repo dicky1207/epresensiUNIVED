@@ -1,4 +1,12 @@
 @extends('layouts.admin.master')
+<?php
+function hitunghari($tanggal_awal, $tanggal_akhir){
+    $tanggal_1 = date_create($tanggal_awal);
+    $tanggal_2 = date_create($tanggal_akhir); // waktu sekarang
+    $diff = date_diff( $tanggal_1, $tanggal_2 );
+    return $diff->days + 1;
+}
+?>
 @section('content')
 <div class="page-header d-print-none">
     <div class="container-xl">
@@ -123,7 +131,7 @@
                                 <td>{{ $d->nik }}</td>
                                 <td>{{ $d->nama_lengkap }}</td>
                                 <td>{{ $d->jabatan }}</td>
-                                <td>{{ $d->status == "i" ? "Izin" : "Cuti" }}</td>
+                                <td>{{ $d->status == "i" ? "Izin" : "Cuti" }} {{ hitunghari($d->tgl_awal, $d->tgl_akhir) }} Hari</td>
                                 <td>{{ $d->keterangan }}</td>
                                 <td>
                                     <a href="{{ Storage::url($d->lampiran) }}" target="_blank">

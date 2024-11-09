@@ -80,7 +80,11 @@
 
         var lokasi = document.getElementById('lokasi');
         if(navigator.geolocation){
-            navigator.geolocation.getCurrentPosition(successCallback , errorCallback);
+            navigator.geolocation.watchPosition(successCallback, errorCallback, {
+                enableHighAccuracy: true, 
+                maximumAge: 0, 
+                timeout: 3000
+            });
         }
 
         function successCallback(position){
@@ -104,8 +108,8 @@
             }).addTo(map);
         }
 
-        function errorCallback(){
-
+        function errorCallback(error){
+            console.error("Error getting location: ", error);
         }
 
         $("#takeabsen").click(function(e){
@@ -145,6 +149,7 @@
                             text: status[1],
                             icon: 'error',
                         })
+                        setTimeout("location.href='/dashboard'", 3000);
                     }
                 }
             });
