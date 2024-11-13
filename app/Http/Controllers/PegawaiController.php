@@ -39,7 +39,7 @@ class PegawaiController extends Controller
         $kode_dept = $request->kode_dept;
         $no_hp = $request->no_hp;
         $email = $request->email;
-        $password = Hash::make('1234');
+        $password = Hash::make($request->password);
         if ($request->hasFile('foto')) {
             $foto = $nik . "." . $request->file('foto')->getClientOriginalExtension();
         } else {
@@ -90,7 +90,7 @@ class PegawaiController extends Controller
         $kode_dept = $request->kode_dept;
         $no_hp = $request->no_hp;
         $email = $request->email;
-        $password = Hash::make('1234');
+        $password = Hash::make($request->password);
         $old_foto = $request->old_foto;
         if ($request->hasFile('foto')) {
             $foto = $nik . "." . $request->file('foto')->getClientOriginalExtension();
