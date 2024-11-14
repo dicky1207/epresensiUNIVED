@@ -426,7 +426,7 @@
     <script>
         $(function() {
             $("#generatePassword").click(function() {
-                var randomPassword = Math.floor(1000 + Math.random() * 9000);
+                var randomPassword = Math.floor(100000 + Math.random() * 900000);
                 $("#password").val(randomPassword);
             });
         });

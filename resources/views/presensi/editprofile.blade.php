@@ -35,6 +35,11 @@
             <p>{{ $message }}</p>
         </div>    
         @enderror
+        @error('password')
+        <div class="alert alert-danger">
+            <p>{{ $message }}</p>
+        </div>    
+        @enderror
     </div>
 </div>
 <form action="/presensi/{{ $pegawai->nik }}/updateprofile" method="POST" enctype="multipart/form-data">
@@ -58,6 +63,9 @@
         <div class="form-group boxed">
             <div class="input-wrapper">
                 <input type="password" class="form-control" name="password" placeholder="Password" autocomplete="off">
+                @error('password')
+                <small class="text-danger">{{ $message }}</small>
+                @enderror
             </div>
         </div>
         <div class="custom-file-upload" id="fileUpload1">

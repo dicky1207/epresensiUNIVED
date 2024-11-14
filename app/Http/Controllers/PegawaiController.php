@@ -92,6 +92,12 @@ class PegawaiController extends Controller
         $email = $request->email;
         $password = Hash::make($request->password);
         $old_foto = $request->old_foto;
+
+        // Validasi minimal password 6 karakter
+        if (!empty($password) && strlen($password) < 6) {
+            return Redirect::back()->with(['warning' => 'Password harus minimal 6 karakter']);
+        }
+
         if ($request->hasFile('foto')) {
             $foto = $nik . "." . $request->file('foto')->getClientOriginalExtension();
         } else {
@@ -108,6 +114,7 @@ class PegawaiController extends Controller
                 'foto' => $foto,
                 'password' => $password
             ];
+
             $update = DB::table('pegawai')->where('nik', $nik)->update($data);
             if ($update) {
                 if ($request->hasFile('foto')) {
