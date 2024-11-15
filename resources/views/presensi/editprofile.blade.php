@@ -35,11 +35,6 @@
             <p>{{ $message }}</p>
         </div>    
         @enderror
-        @error('password')
-        <div class="alert alert-danger">
-            <p>{{ $message }}</p>
-        </div>    
-        @enderror
     </div>
 </div>
 <form action="/presensi/{{ $pegawai->nik }}/updateprofile" method="POST" enctype="multipart/form-data">
