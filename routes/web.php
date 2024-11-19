@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartemenController;
@@ -33,7 +34,7 @@ Route::middleware(['guest:user'])->group(function () {
     Route::post('/prosesloginadmin', [AuthController::class, 'prosesloginadmin']);
 });
 
-//Email
+//Reset Password Pegawai
 Route::get('send-mail',[AuthController::class,'index']);
 Route::get('reset-password', [AuthController::class, 'showResetForm'])->name('password.request');
 Route::post('reset-password', [AuthController::class, 'sendNewPassword']);

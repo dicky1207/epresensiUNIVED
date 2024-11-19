@@ -37,7 +37,7 @@
             </div>
           </a>
           <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-            <a href="/panel/proseslogoutadmin" class="dropdown-item">Logout</a>
+            <a href="/panel/proseslogoutadmin" class="dropdown-item">Log out</a>
           </div>
         </div>
       </div>

@@ -59,7 +59,7 @@
               @csrf
               <div class="mb-3">
                 <label class="form-label">Username</label>
-                <input type="email" name="username" class="form-control" placeholder="Masukkan Username" autocomplete="off">
+                <input type="text" name="username" class="form-control" placeholder="Masukkan Username" autocomplete="off">
               </div>
               <div class="mb-2">
                 <label class="form-label">Password</label>
