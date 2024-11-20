@@ -31,7 +31,7 @@ class KirimEmail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: '🔒 E-mail Reset Password',
+            subject: '🔒 Permintaan Reset Password',
         );
     }
 
