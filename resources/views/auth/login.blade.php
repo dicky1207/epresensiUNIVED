@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#000000">
     <title>E-Presensi Universitas Dehasen Bengkulu</title>
-    <link rel="icon" type="image/png" href="{{ asset('assets/img/favicon.png') }}" sizes="32x32">
+    <link rel="icon" type="image/png" href="{{ asset('tabler/static/favicon.png') }}" sizes="32x32">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/img/icon/192x192.png') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="manifest" href="__manifest.json">
@@ -83,7 +83,7 @@
     <div id="appCapsule">
         <div class="login-form" id="login-form">
             <div class="section">
-                <img src="{{ asset('assets/img/login/login.png') }}" alt="image" class="form-image">
+                <img src="{{ asset('assets/img/login.png') }}" alt="image" class="form-image">
             </div>
             <div class="section mt-1">
                 <h1>E-Presensi UNIVED</h1>

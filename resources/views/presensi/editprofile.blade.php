@@ -33,7 +33,7 @@
         @error('foto')
         <div class="alert alert-warning">
             <p>{{ $message }}</p>
-        </div>    
+        </div>
         @enderror
     </div>
 </div>
@@ -57,7 +57,7 @@
         </div>
         <div class="form-group boxed">
             <div class="input-wrapper">
-                <input type="password" class="form-control" name="password" placeholder="Password" autocomplete="off">
+                <input type="password" class="form-control" name="password" placeholder="Ganti Password" autocomplete="off">
                 @error('password')
                 <small class="text-danger">{{ $message }}</small>
                 @enderror
